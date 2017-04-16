@@ -1,0 +1,7 @@
+{
+    "host": "localhost:22",
+    "user": "hzc",
+    "passwd":"hzc",
+    "src_dir": "/home/hzc/src/",
+    "dst_dir": "/home/hzc/dst/"
+}
