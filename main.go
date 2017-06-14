@@ -29,12 +29,29 @@ func init() {
 	config["passwd"], _ = json.Get("passwd").String()
 }
 
+func existDir(p string) (bool, error) {
+	_, err := os.Stat(p)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return true, err
+		} else {
+			return false, err
+		}
+	}
+
+	return false, err
+}
+
 func main() {
 	client, err := sftp_client.NewSftpClient(config["host"], config["user"], config["passwd"], true)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer client.Close()
+
+	if exist, err := existDir(config["srcDir"]); exist {
+		log.Fatal(err)
+	}
 
 	err1 := client.PutDir(config["srcDir"], config["dstDir"])
 	if err1 != nil {
